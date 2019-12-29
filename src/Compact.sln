@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compact.Routes", "Compact.R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compact.Impressions", "Compact.Impressions\Compact.Impressions.csproj", "{11E822A2-029E-4B2E-9615-002552ECDC1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compact.Reports", "Compact.Reports\Compact.Reports.csproj", "{0C9F01A6-F63F-4421-BC46-DD006F193C73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compact.Reports", "Compact.Reports\Compact.Reports.csproj", "{0C9F01A6-F63F-4421-BC46-DD006F193C73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compact.Comments", "Compact.Comments\Compact.Comments.csproj", "{EA8BC1C5-38BC-46F9-ABFE-EB4070E05CED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{0C9F01A6-F63F-4421-BC46-DD006F193C73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C9F01A6-F63F-4421-BC46-DD006F193C73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C9F01A6-F63F-4421-BC46-DD006F193C73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA8BC1C5-38BC-46F9-ABFE-EB4070E05CED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA8BC1C5-38BC-46F9-ABFE-EB4070E05CED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA8BC1C5-38BC-46F9-ABFE-EB4070E05CED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA8BC1C5-38BC-46F9-ABFE-EB4070E05CED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
