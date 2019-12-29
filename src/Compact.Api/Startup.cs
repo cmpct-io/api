@@ -1,4 +1,5 @@
 ﻿using Compact.Impressions;
+using Compact.Reports;
 using Compact.Routes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,9 @@ namespace Compact.Api
 
             services.AddSingleton<IImpressionsDataStore, ImpressionsDataStore>();
             services.AddScoped<IImpressionsWriter, ImpressionsWriter>();
+
+            services.AddSingleton<IReportsDataStore, ReportsDataStore>();
+            services.AddScoped<IReportWriter, ReportWriter>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

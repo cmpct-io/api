@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Compact.Impressions\Compact.Impressions.csproj" />
+    <ProjectReference Include="..\Compact.Reports\Compact.Reports.csproj" />
     <ProjectReference Include="..\Compact.Routes\Compact.Routes.csproj" />
   </ItemGroup>
 
