@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compact.Api", "Compact.Api\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compact.Routes", "Compact.Routes\Compact.Routes.csproj", "{FB0BC07A-EDD6-474E-B261-4BDAD5E49184}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compact.Impressions", "Compact.Impressions\Compact.Impressions.csproj", "{11E822A2-029E-4B2E-9615-002552ECDC1C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{FB0BC07A-EDD6-474E-B261-4BDAD5E49184}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB0BC07A-EDD6-474E-B261-4BDAD5E49184}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB0BC07A-EDD6-474E-B261-4BDAD5E49184}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11E822A2-029E-4B2E-9615-002552ECDC1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11E822A2-029E-4B2E-9615-002552ECDC1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11E822A2-029E-4B2E-9615-002552ECDC1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11E822A2-029E-4B2E-9615-002552ECDC1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
