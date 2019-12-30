@@ -2,7 +2,7 @@
 {
     public enum ReportType
     {
-        Scam,
-        Other
+        Scam = 1,
+        Other = 2
     }
 }
