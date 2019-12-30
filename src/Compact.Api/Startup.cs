@@ -4,6 +4,7 @@ using Compact.Reports;
 using Compact.Routes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -19,15 +20,28 @@ namespace Compact.Api
 
         public IConfiguration Configuration { get; }
 
+        readonly string CorsPolicy = "_myAllowSpecificOrigins";
+
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(CorsPolicy,
+                builder =>
+                {
+                    builder
+                        .WithOrigins("http://localhost:3000", "https://cmpct.azurewebsites.net")
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
 
             services.AddMvc(endpoints =>
             {
                 endpoints.EnableEndpointRouting = false;
             })
-            .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_2);
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerGen(c =>
             {
@@ -52,13 +66,7 @@ namespace Compact.Api
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors(
-                options => options
-                .WithOrigins(new string[] { "http://localhost:3000", "https://cmpct.azurewebsites.net" })
-                .AllowAnyMethod()
-                .AllowAnyOrigin()
-                .AllowAnyHeader()
-            );
+            app.UseCors(CorsPolicy);
 
             app.UseSwagger();
 
