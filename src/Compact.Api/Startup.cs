@@ -47,7 +47,7 @@ namespace Compact.Api
             services.AddScoped<ICommentsWriter, CommentsWriter>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors(
                 options => options
@@ -64,7 +64,7 @@ namespace Compact.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "api.cmpct.io V1");
             });
 
-            if (env.IsDevelopment())
+            if ("Development".Equals(env.EnvironmentName, System.StringComparison.OrdinalIgnoreCase))
             {
                 app.UseDeveloperExceptionPage();
             }
