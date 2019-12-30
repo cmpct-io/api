@@ -14,11 +14,11 @@
             _dataStore = dataStore;
         }
 
-        public void Create(string id, string target)
+        public void Create(string routeId, string target)
         {
             _dataStore.Add(new Route
             {
-                Id = id,
+                Id = routeId,
                 Target = target
             });
         }

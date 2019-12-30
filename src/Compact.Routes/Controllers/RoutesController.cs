@@ -49,7 +49,7 @@ namespace Compact.Routes
         [ProducesResponseType(204)]
         public ActionResult Post(PostRouteRequestModel request)
         {
-            _routesWriter.Create(request.Id, request.Target);
+            _routesWriter.Create(request.RouteId, request.Target);
 
             return NoContent();
         }
