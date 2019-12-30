@@ -30,7 +30,7 @@ namespace Compact.Api
                 builder =>
                 {
                     builder
-                        .WithOrigins("http://localhost:3000", "https://cmpct.azurewebsites.net")
+                        .WithOrigins("http://localhost:3000", "https://cmpct.azurewebsites.net", "https://cmpct.io")
                         .AllowAnyOrigin()
                         .AllowAnyMethod()
                         .AllowAnyHeader();
