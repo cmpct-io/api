@@ -21,12 +21,13 @@ namespace Compact.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
             services.AddMvc(endpoints =>
             {
                 endpoints.EnableEndpointRouting = false;
-            });
-
-            services.AddCors();
+            })
+            .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerGen(c =>
             {
@@ -53,7 +54,7 @@ namespace Compact.Api
         {
             app.UseCors(
                 options => options
-                .WithOrigins(new string[] { "http://localhost:3000", "https://contentsourceweb.azurewebsites.net" })
+                .WithOrigins(new string[] { "http://localhost:3000", "https://cmpct.azurewebsites.net" })
                 .AllowAnyMethod()
                 .AllowAnyOrigin()
                 .AllowAnyHeader()
