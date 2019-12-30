@@ -17,6 +17,9 @@ namespace Compact.Routes
             _routesWriter = routesWriter;
         }
 
+        /// <summary>
+        /// GET all routes
+        /// </summary>
         [HttpGet("/api/routes")]
         [ProducesResponseType(typeof(IEnumerable<Route>), 200)]
         public ActionResult<IEnumerable<string>> Get()
@@ -26,19 +29,27 @@ namespace Compact.Routes
             return Ok(response);
         }
 
-        [HttpGet("/api/routes/{shortcut}")]
+        /// <summary>
+        /// Get details about a specific route
+        /// </summary>
+        [HttpGet("/api/routes/{routeId}")]
         [ProducesResponseType(typeof(Route), 200)]
-        public ActionResult<IEnumerable<string>> Get(string shortcut)
+        public ActionResult<IEnumerable<string>> Get(string routeId)
         {
-            var response = _routesReader.Get(shortcut);
+            var response = _routesReader.Get(routeId);
 
             return Ok(response);
         }
 
+        /// <summary>
+        /// Create a new route
+        /// </summary>
+        /// <param name="request"></param>
         [HttpPost("/api/routes")]
+        [ProducesResponseType(204)]
         public ActionResult Post(PostRouteRequestModel request)
         {
-            _routesWriter.Create(request.Id, request.Target, request.Shortcut);
+            _routesWriter.Create(request.Id, request.Target);
 
             return NoContent();
         }

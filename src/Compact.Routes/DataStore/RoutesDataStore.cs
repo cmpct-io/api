@@ -22,11 +22,11 @@ namespace Compact.Routes
             return _routes;
         }
 
-        public Route Get(string shortcut)
+        public Route Get(string routeId)
         {
             return _routes
-                .FirstOrDefault(rou => shortcut
-                    .Equals(rou.Shortcut, StringComparison.OrdinalIgnoreCase));
+                .FirstOrDefault(rou => routeId
+                    .Equals(rou.Id, StringComparison.OrdinalIgnoreCase));
         }
 
         public void Add(Route route)

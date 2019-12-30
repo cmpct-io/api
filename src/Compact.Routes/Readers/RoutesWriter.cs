@@ -2,7 +2,7 @@
 {
     public interface IRoutesWriter
     {
-        void Create(string id, string target, string shortcut);
+        void Create(string id, string target);
     }
 
     public class RoutesWriter : IRoutesWriter
@@ -14,13 +14,12 @@
             _dataStore = dataStore;
         }
 
-        public void Create(string id, string target, string shortcut)
+        public void Create(string id, string target)
         {
             _dataStore.Add(new Route
             {
                 Id = id,
-                Target = target,
-                Shortcut = shortcut
+                Target = target
             });
         }
     }
