@@ -3,9 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <ApplicationInsightsResourceId>/subscriptions/1893c2f7-c0c3-4760-bb71-535a5d3645b8/resourcegroups/shared-private-resources/providers/microsoft.insights/components/cmpct-api</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.8.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
   </ItemGroup>
 
@@ -14,6 +16,10 @@
     <ProjectReference Include="..\Compact.Impressions\Compact.Impressions.csproj" />
     <ProjectReference Include="..\Compact.Reports\Compact.Reports.csproj" />
     <ProjectReference Include="..\Compact.Routes\Compact.Routes.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>
