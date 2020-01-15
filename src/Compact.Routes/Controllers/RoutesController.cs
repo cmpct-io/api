@@ -34,9 +34,19 @@ namespace Compact.Routes
         /// </summary>
         [HttpGet("/api/routes/{routeId}")]
         [ProducesResponseType(typeof(Route), 200)]
-        public ActionResult<IEnumerable<string>> Get(string routeId)
+        public ActionResult<IEnumerable<string>> Get(string routeId, string password)
         {
             var response = _routesReader.Get(routeId);
+
+            if (response == null)
+            {
+                return NotFound();
+            }
+
+            if (InvalidPassword(password, response.Password))
+            {
+                return BadRequest("Password provided does not match");
+            }
 
             return Ok(response);
         }
@@ -49,9 +59,17 @@ namespace Compact.Routes
         [ProducesResponseType(204)]
         public ActionResult Post(PostRouteRequestModel request)
         {
-            _routesWriter.Create(request.RouteId, request.Target);
+            _routesWriter.Create(request.RouteId, request.Target, request.Password);
 
             return NoContent();
+        }
+
+        private bool InvalidPassword(string requestPassword, string actualPassword)
+        {
+            return
+                !string.IsNullOrEmpty(requestPassword)
+                && !string.IsNullOrEmpty(actualPassword)
+                && !requestPassword.Equals(actualPassword);
         }
     }
 }
