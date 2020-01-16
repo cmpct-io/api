@@ -22,9 +22,9 @@ namespace Compact.Reports
         /// <param name="routeId">The route to query</param>
         [HttpGet("/api/routes/{routeId}/reports")]
         [ProducesResponseType(typeof(IEnumerable<Report>), 200)]
-        public ActionResult Get(string routeId)
+        public async Task<ActionResult> GetAsync(string routeId)
         {
-            var response = _reader.Get(routeId);
+            var response = await _reader.GetAsync(routeId);
 
             return Ok(response);
         }

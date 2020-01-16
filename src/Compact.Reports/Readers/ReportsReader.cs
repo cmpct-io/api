@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Compact.Reports
 {
     public interface IReportsReader
     {
-        IEnumerable<Report> Get(string routeId);
+        Task<IEnumerable<Report>> GetAsync(string routeId);
     }
 
     public class ReportsReader : IReportsReader
@@ -18,9 +19,9 @@ namespace Compact.Reports
             _dataStore = dataStore;
         }
 
-        public IEnumerable<Report> Get(string routeId)
+        public async Task<IEnumerable<Report>> GetAsync(string routeId)
         {
-            var results = _dataStore.GetAsync(routeId);
+            var results = await _dataStore.GetAsync(routeId);
 
             return results;
         }
