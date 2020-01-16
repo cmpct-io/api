@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Compact.Comments
 {
@@ -20,9 +21,9 @@ namespace Compact.Comments
         /// </summary>
         [HttpGet("/api/routes/{routeId}/comments")]
         [ProducesResponseType(typeof(IEnumerable<Comment>), 200)]
-        public ActionResult Get(string routeId)
+        public async Task<ActionResult> GetAsync(string routeId)
         {
-            var response = _reader.Get(routeId);
+            var response = await _reader.GetAsync(routeId);
 
             return Ok(response);
         }
@@ -31,9 +32,9 @@ namespace Compact.Comments
         /// Add a new comment about a route
         /// </summary>
         [HttpPost("/api/comments")]
-        public ActionResult Post(PostCommentRequestModel request)
+        public async Task<ActionResult> PostAsync(PostCommentRequestModel request)
         {
-            _writer.Add(request.RouteId, request.Name, request.CommentText);
+            await _writer.AddAsync(request.RouteId, request.Name, request.CommentText);
 
             return NoContent();
         }

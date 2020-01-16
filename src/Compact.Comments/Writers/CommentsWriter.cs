@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Compact.Comments
 {
     public interface ICommentsWriter
     {
-        void Add(string routeId, string name, string commentText);
+        Task AddAsync(string routeId, string name, string commentText);
     }
 
     public class CommentsWriter : ICommentsWriter
@@ -16,7 +17,7 @@ namespace Compact.Comments
             _dataStore = dataStore;
         }
 
-        public void Add(string routeId, string name, string commentText)
+        public async Task AddAsync(string routeId, string name, string commentText)
         {
             var comment = new Comment
             {
@@ -27,7 +28,7 @@ namespace Compact.Comments
                 DateAdded = DateTime.UtcNow
             };
 
-            _dataStore.Add(comment);
+            await _dataStore.AddAsync(comment);
         }
     }
 }

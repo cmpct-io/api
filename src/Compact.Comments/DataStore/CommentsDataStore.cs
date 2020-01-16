@@ -1,27 +1,48 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Compact.Infrastructure;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Compact.Comments
 {
     public interface ICommentsDataStore
     {
-        IEnumerable<Comment> Get(string routeId);
+        Task<IEnumerable<Comment>> GetAsync(string routeId);
 
-        void Add(Comment comment);
+        Task AddAsync(Comment comment);
     }
 
     public class CommentsDataStore : ICommentsDataStore
     {
-        private List<Comment> _comments = new List<Comment>();
+        private readonly IAzureStorageManager _storageManager;
 
-        public IEnumerable<Comment> Get(string routeId)
+        private const string CONTAINER_NAME = "comments";
+
+        public CommentsDataStore(IAzureStorageManager storageManager)
         {
-            return _comments.Where(comment => routeId.Equals(comment.RouteId, System.StringComparison.OrdinalIgnoreCase));
+            _storageManager = storageManager;
         }
 
-        public void Add(Comment comment)
+        public async Task<IEnumerable<Comment>> GetAsync(string routeId)
+            => await _storageManager.ReadObject<List<Comment>>(CONTAINER_NAME, $"{routeId}.json");
+
+        public async Task AddAsync(Comment comment)
         {
-            _comments.Add(comment);
+            var fileName = $"{comment.RouteId}.json";
+            var existingFile = await _storageManager.ReadObject<List<Comment>>(CONTAINER_NAME, fileName);
+
+            if (existingFile == null)
+            {
+                await _storageManager.StoreObject(
+                    CONTAINER_NAME,
+                    fileName,
+                    new List<Comment> { comment });
+            }
+            else
+            {
+                existingFile.Add(comment);
+
+                await _storageManager.StoreObject(CONTAINER_NAME, fileName, existingFile);
+            }
         }
     }
 }

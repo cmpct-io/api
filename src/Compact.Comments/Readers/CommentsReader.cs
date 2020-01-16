@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Compact.Comments
 {
     public interface ICommentsReader
     {
-        IEnumerable<Comment> Get(string routeId);
+        Task<IEnumerable<Comment>> GetAsync(string routeId);
     }
 
     public class CommentsReader : ICommentsReader
@@ -16,9 +17,9 @@ namespace Compact.Comments
             _dataStore = dataStore;
         }
 
-        public IEnumerable<Comment> Get(string routeId)
+        public async Task<IEnumerable<Comment>> GetAsync(string routeId)
         {
-            return _dataStore.Get(routeId);
+            return await _dataStore.GetAsync(routeId);
         }
     }
 }
