@@ -20,7 +20,6 @@ namespace Compact.Reports
         {
             await _dataStore.AddAsync(new Report
             {
-                Id = "report1",
                 RouteId = routeId,
                 Name = name,
                 ReportType = reportType

@@ -21,11 +21,10 @@ namespace Compact.Comments
         {
             var comment = new Comment
             {
-                Id = "comment1",
                 RouteId = routeId,
                 Name = name,
-                CommentText = commentText,
-                DateAdded = DateTime.UtcNow
+                Text = commentText,
+                Added = DateTime.UtcNow
             };
 
             await _dataStore.AddAsync(comment);
