@@ -17,6 +17,8 @@ namespace Compact.Routes
     {
         private readonly IAzureStorageManager _fileStore;
 
+        private const string CONTAINER_NAME = "routes";
+
         private List<Route> _routes = new List<Route>();
 
         public RoutesDataStore(IAzureStorageManager fileStore)
@@ -35,7 +37,7 @@ namespace Compact.Routes
                 return cachedResult;
             }
 
-            var downloadedResult = await _fileStore.ReadObject<Route>("routes", $"{routeId}.json");
+            var downloadedResult = await _fileStore.ReadObject<Route>(CONTAINER_NAME, $"{routeId}.json");
 
             return downloadedResult;
         }
@@ -43,10 +45,10 @@ namespace Compact.Routes
         public async Task AddAsync(Route route)
         {
             // Permanent storage
-            await _fileStore.StoreObject("routes", $"{route.Id}.json", route);
+            await _fileStore.StoreObject(CONTAINER_NAME, $"{route.Id}.json", route);
 
             // Cached storage
-            //_routes.Add(route);
+            _routes.Add(route);
         }
     }
 }
