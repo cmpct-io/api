@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Compact.Routes
 {
@@ -18,25 +19,13 @@ namespace Compact.Routes
         }
 
         /// <summary>
-        /// GET all routes
-        /// </summary>
-        [HttpGet("/api/routes")]
-        [ProducesResponseType(typeof(IEnumerable<Route>), 200)]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            var response = _routesReader.Get();
-
-            return Ok(response);
-        }
-
-        /// <summary>
         /// Get details about a specific route
         /// </summary>
         [HttpGet("/api/routes/{routeId}")]
         [ProducesResponseType(typeof(Route), 200)]
-        public ActionResult<IEnumerable<string>> Get(string routeId, string password)
+        public async Task<ActionResult<IEnumerable<string>>> GetAsync(string routeId, string password)
         {
-            var response = _routesReader.Get(routeId);
+            var response = await _routesReader.GetAsync(routeId);
 
             if (response == null)
             {
@@ -59,7 +48,7 @@ namespace Compact.Routes
         [ProducesResponseType(204)]
         public ActionResult Post(PostRouteRequestModel request)
         {
-            _routesWriter.Create(request.RouteId, request.Target, request.Password);
+            await _routesWriter.CreateAsync(request.RouteId, request.Target, request.Password);
 
             return NoContent();
         }

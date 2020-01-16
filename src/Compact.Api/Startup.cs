@@ -1,10 +1,10 @@
 ﻿using Compact.Comments;
 using Compact.Impressions;
+using Compact.Infrastructure;
 using Compact.Reports;
 using Compact.Routes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -42,6 +42,9 @@ namespace Compact.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api.cmpct.io", Version = "v1" });
             });
 
+            services.AddSingleton<IConfigurationValueProvider, ConfigurationValueProvider>();
+            services.AddSingleton<IAzureStorageManager, AzureStorageManager>();
+
             services.AddSingleton<IRoutesDataStore, RoutesDataStore>();
             services.AddScoped<IRoutesReader, RoutesReader>();
             services.AddScoped<IRoutesWriter, RoutesWriter>();
@@ -68,7 +71,7 @@ namespace Compact.Api
 
             app.UseHttpsRedirection();
 
-            app.UseRouting();  
+            app.UseRouting();
             app.UseCors("openCorsPolicy");
 
             app.UseEndpoints(endpoints =>

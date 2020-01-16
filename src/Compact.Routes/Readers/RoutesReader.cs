@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Compact.Routes
 {
     public interface IRoutesReader
     {
-        IEnumerable<Route> Get();
-
-        Route Get(string shortcut);
+        Task<Route> GetAsync(string shortcut);
     }
 
     public class RoutesReader : IRoutesReader
@@ -18,14 +17,9 @@ namespace Compact.Routes
             _dataStore = dataStore;
         }
 
-        public IEnumerable<Route> Get()
+        public async Task<Route> GetAsync(string shortcut)
         {
-            return _dataStore.Get();
-        }
-
-        public Route Get(string shortcut)
-        {
-            return _dataStore.Get(shortcut);
+            return await _dataStore.GetAsync(shortcut);
         }
     }
 }

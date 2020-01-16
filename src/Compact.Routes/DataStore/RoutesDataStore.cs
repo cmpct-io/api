@@ -1,37 +1,52 @@
-﻿using System;
+﻿using Compact.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Compact.Routes
 {
     public interface IRoutesDataStore
     {
-        IEnumerable<Route> Get();
+        Task<Route> GetAsync(string routeId);
 
-        Route Get(string shortcut);
-
-        void Add(Route route);
+        Task AddAsync(Route route);
     }
 
     public class RoutesDataStore : IRoutesDataStore
     {
+        private readonly IAzureStorageManager _fileStore;
+
         private List<Route> _routes = new List<Route>();
 
-        public IEnumerable<Route> Get()
+        public RoutesDataStore(IAzureStorageManager fileStore)
         {
-            return _routes;
+            _fileStore = fileStore;
         }
 
-        public Route Get(string routeId)
+        public async Task<Route> GetAsync(string routeId)
         {
-            return _routes
+            var cachedResult = _routes
                 .FirstOrDefault(rou => routeId
                     .Equals(rou.Id, StringComparison.OrdinalIgnoreCase));
+
+            if (cachedResult != null)
+            {
+                return cachedResult;
+            }
+
+            var downloadedResult = await _fileStore.ReadObject<Route>("routes", $"{routeId}.json");
+
+            return downloadedResult;
         }
 
-        public void Add(Route route)
+        public async Task AddAsync(Route route)
         {
-            _routes.Add(route);
+            // Permanent storage
+            await _fileStore.StoreObject("routes", $"{route.Id}.json", route);
+
+            // Cached storage
+            //_routes.Add(route);
         }
     }
 }

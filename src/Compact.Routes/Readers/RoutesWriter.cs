@@ -1,8 +1,10 @@
-﻿namespace Compact.Routes
+﻿using System.Threading.Tasks;
+
+namespace Compact.Routes
 {
     public interface IRoutesWriter
     {
-        void Create(string id, string target, string password);
+        Task CreateAsync(string routeId, string target, string password);
     }
 
     public class RoutesWriter : IRoutesWriter
@@ -14,9 +16,9 @@
             _dataStore = dataStore;
         }
 
-        public void Create(string routeId, string target, string password)
+        public async Task CreateAsync(string routeId, string target, string password)
         {
-            _dataStore.Add(new Route
+            await _dataStore.AddAsync(new Route
             {
                 Id = routeId,
                 Target = target,
