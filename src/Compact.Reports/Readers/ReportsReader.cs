@@ -20,7 +20,7 @@ namespace Compact.Reports
 
         public IEnumerable<Report> Get(string routeId)
         {
-            var results = _dataStore.Get(routeId);
+            var results = _dataStore.GetAsync(routeId);
 
             return results;
         }

@@ -72,9 +72,10 @@ namespace Compact.Infrastructure
             var cloudBlobContainer = FetchBlobContainer(storageAccount, containerName);
             CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(fileName);
 
-            var content = await cloudBlobContainer.ExistsAsync()
+            var content = await cloudBlockBlob.ExistsAsync()
                 ? await cloudBlockBlob.DownloadTextAsync()
                 : string.Empty;
+
 
             var result = JsonConvert.DeserializeObject<T>(content);
 

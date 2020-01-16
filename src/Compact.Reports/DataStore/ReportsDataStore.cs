@@ -1,27 +1,48 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Compact.Infrastructure;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Compact.Reports
 {
     public interface IReportsDataStore
     {
-        IEnumerable<Report> Get(string routeId);
+        Task<IEnumerable<Report>> GetAsync(string routeId);
 
-        void Add(Report report);
+        Task AddAsync(Report report);
     }
 
     public class ReportsDataStore : IReportsDataStore
     {
-        private List<Report> _reports = new List<Report>();
+        private readonly IAzureStorageManager _storageManager;
 
-        public IEnumerable<Report> Get(string routeId)
+        private const string CONTAINER_NAME = "reports";
+
+        public ReportsDataStore(IAzureStorageManager storageManager)
         {
-            return _reports.Where(rep => routeId.Equals(rep.RouteId, System.StringComparison.OrdinalIgnoreCase));
+            _storageManager = storageManager;
         }
 
-        public void Add(Report report)
+        public async Task<IEnumerable<Report>> GetAsync(string routeId)
+            => await _storageManager.ReadObject<List<Report>>(CONTAINER_NAME, $"{routeId}.json");
+
+        public async Task AddAsync(Report report)
         {
-            _reports.Add(report);
+            var fileName = $"{report.RouteId}.json";
+            var existingFile = await _storageManager.ReadObject<List<Report>>(CONTAINER_NAME, fileName);
+
+            if (existingFile == null)
+            {
+                await _storageManager.StoreObject(
+                    CONTAINER_NAME,
+                    fileName,
+                    new List<Report> { report });
+            }
+            else
+            {
+                existingFile.Add(report);
+
+                await _storageManager.StoreObject(CONTAINER_NAME, fileName, existingFile);
+            }
         }
     }
 }

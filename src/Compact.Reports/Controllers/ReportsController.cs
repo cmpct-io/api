@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Compact.Reports
 {
@@ -34,9 +35,9 @@ namespace Compact.Reports
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("/api/reports")]
-        public ActionResult Post(PostReportRequestModel request)
+        public async Task<ActionResult> PostAsync(PostReportRequestModel request)
         {
-            _writer.Add(request.RouteId, request.Name, request.ReportType);
+            await _writer.AddAsync(request.RouteId, request.Name, request.ReportType);
 
             return NoContent();
         }

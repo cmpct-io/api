@@ -1,8 +1,10 @@
-﻿namespace Compact.Reports
+﻿using System.Threading.Tasks;
+
+namespace Compact.Reports
 {
     public interface IReportWriter
     {
-        void Add(string routeId, string name, ReportType reportType);
+        Task AddAsync(string routeId, string name, ReportType reportType);
     }
 
     public class ReportWriter : IReportWriter
@@ -14,9 +16,9 @@
             _dataStore = dataStore;
         }
 
-        public void Add(string routeId, string name, ReportType reportType)
+        public async Task AddAsync(string routeId, string name, ReportType reportType)
         {
-            _dataStore.Add(new Report
+            await _dataStore.AddAsync(new Report
             {
                 Id = "report1",
                 RouteId = routeId,
