@@ -46,7 +46,7 @@ namespace Compact.Routes
         /// <param name="request"></param>
         [HttpPost("/api/routes")]
         [ProducesResponseType(204)]
-        public ActionResult Post(PostRouteRequestModel request)
+        public async Task<ActionResult> PostAsync(PostRouteRequestModel request)
         {
             await _routesWriter.CreateAsync(request.RouteId, request.Target, request.Password);
 
