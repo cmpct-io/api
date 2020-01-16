@@ -25,7 +25,7 @@ namespace Compact.Api
         {
             services.AddCors(options =>
             {
-                options.AddPolicy("openCorsPolicy",
+                options.AddDefaultPolicy(
                 builder =>
                 {
                     builder
@@ -72,7 +72,8 @@ namespace Compact.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors("openCorsPolicy");
+
+            app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {
