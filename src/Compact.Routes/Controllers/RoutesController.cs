@@ -32,12 +32,12 @@ namespace Compact.Routes
                 return NotFound();
             }
 
-            if (InvalidPassword(password, response.Password))
+            if (ValidPassword(response.Password, password))
             {
-                return BadRequest("Password provided does not match");
+                return Ok(response);
             }
 
-            return Ok(response);
+            return BadRequest("Password provided does not match");
         }
 
         /// <summary>
@@ -53,12 +53,16 @@ namespace Compact.Routes
             return NoContent();
         }
 
-        private bool InvalidPassword(string requestPassword, string actualPassword)
+        private bool ValidPassword(string actualPassword, string requestPassword)
         {
+            if (requestPassword == null)
+            {
+                requestPassword = string.Empty;
+            }
+
             return
-                !string.IsNullOrEmpty(requestPassword)
-                && !string.IsNullOrEmpty(actualPassword)
-                && !requestPassword.Equals(actualPassword);
+                string.IsNullOrEmpty(actualPassword)
+                || requestPassword.Equals(actualPassword);
         }
     }
 }
