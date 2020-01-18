@@ -37,7 +37,7 @@ namespace Compact.Routes
                 return Ok(response);
             }
 
-            return BadRequest("Password provided does not match");
+            return Unauthorized();
         }
 
         /// <summary>
