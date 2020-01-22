@@ -1,5 +1,4 @@
 ﻿using Compact.Comments;
-using Compact.Impressions;
 using Compact.Infrastructure;
 using Compact.Reports;
 using Compact.Routes;
@@ -48,9 +47,6 @@ namespace Compact.Api
             services.AddSingleton<IRoutesDataStore, RoutesDataStore>();
             services.AddScoped<IRoutesReader, RoutesReader>();
             services.AddScoped<IRoutesWriter, RoutesWriter>();
-
-            services.AddSingleton<IImpressionsDataStore, ImpressionsDataStore>();
-            services.AddScoped<IImpressionsWriter, ImpressionsWriter>();
 
             services.AddSingleton<IReportsDataStore, ReportsDataStore>();
             services.AddScoped<IReportsReader, ReportsReader>();
