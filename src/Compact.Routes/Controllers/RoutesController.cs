@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Compact.Routes
@@ -48,7 +49,12 @@ namespace Compact.Routes
         [ProducesResponseType(204)]
         public async Task<ActionResult> PostAsync(PostRouteRequestModel request)
         {
-            await _routesWriter.CreateAsync(request.RouteId, request.Target, request.Password);
+            if (!request.Links.Any())
+            {
+                return BadRequest("No links were provided, at least one must link must be specified");
+            }
+
+            await _routesWriter.CreateAsync(request.RouteId, request.Links, request.Password);
 
             return NoContent();
         }
