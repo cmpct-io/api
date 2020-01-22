@@ -48,7 +48,7 @@ namespace Compact.Routes
         [ProducesResponseType(204)]
         public async Task<ActionResult> PostAsync(PostRouteRequestModel request)
         {
-            await _routesWriter.CreateAsync(request.RouteId, request.Target, request.Password);
+            await _routesWriter.CreateAsync(request.RouteId, request.Links, request.Password);
 
             return NoContent();
         }
