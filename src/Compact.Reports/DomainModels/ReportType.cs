@@ -2,7 +2,9 @@
 {
     public enum ReportType
     {
-        Scam = 1,
-        Other = 2
+        Scam = 0,
+        Other = 1,
+        Insecure = 2,
+        Phishing = 3
     }
 }

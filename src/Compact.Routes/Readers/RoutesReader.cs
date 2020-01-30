@@ -16,9 +16,7 @@ namespace Compact.Routes
             _dataStore = dataStore;
         }
 
-        public async Task<Route> GetAsync(string shortcut)
-        {
-            return await _dataStore.GetAsync(shortcut);
-        }
+        public async Task<Route> GetAsync(string shortcut) =>
+            await _dataStore.GetAsync(shortcut);
     }
 }

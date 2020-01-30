@@ -17,9 +17,7 @@ namespace Compact.Comments
             _dataStore = dataStore;
         }
 
-        public async Task<IEnumerable<Comment>> GetAsync(string routeId)
-        {
-            return await _dataStore.GetAsync(routeId);
-        }
+        public async Task<IEnumerable<Comment>> GetAsync(string routeId) =>
+            await _dataStore.GetAsync(routeId);
     }
 }

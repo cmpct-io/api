@@ -55,6 +55,7 @@ namespace Compact.Api
             services.AddSingleton<ICommentsDataStore, CommentsDataStore>();
             services.AddScoped<ICommentsReader, CommentsReader>();
             services.AddScoped<ICommentsWriter, CommentsWriter>();
+
             services.AddApplicationInsightsTelemetry();
         }
 

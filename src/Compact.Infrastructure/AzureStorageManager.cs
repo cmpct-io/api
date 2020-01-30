@@ -11,8 +11,6 @@ namespace Compact.Infrastructure
         Task<string> StoreObject(string containerName, string fileName, object obj);
 
         Task<T> ReadObject<T>(string containerName, string fileName);
-
-        Task DeleteFile(string containerName, string fileName);
     }
 
     public class AzureStorageManager : IAzureStorageManager
@@ -22,26 +20,6 @@ namespace Compact.Infrastructure
         public AzureStorageManager(IConfigurationValueProvider configurationValueProvider)
         {
             _configurationValueProvider = configurationValueProvider;
-        }
-
-        private CloudStorageAccount ConnectStorageAccount()
-        {
-            string storageConnectionString = _configurationValueProvider.GetValue("StorageConnectionString");
-
-            if (CloudStorageAccount.TryParse(storageConnectionString, out CloudStorageAccount storageAccount))
-            {
-                return storageAccount;
-            }
-            else
-            {
-                throw new WebException("Unable to connect to storage account");
-            }
-        }
-
-        private static CloudBlobContainer FetchBlobContainer(CloudStorageAccount storageAccount, string containerName)
-        {
-            CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
-            return cloudBlobClient.GetContainerReference(containerName);
         }
 
         public async Task<string> StoreObject(string containerName, string fileName, object obj)
@@ -76,22 +54,29 @@ namespace Compact.Infrastructure
                 ? await cloudBlockBlob.DownloadTextAsync()
                 : string.Empty;
 
-
             var result = JsonConvert.DeserializeObject<T>(content);
 
             return result;
         }
 
-        public async Task DeleteFile(string containerName, string fileName)
+        private CloudStorageAccount ConnectStorageAccount()
         {
-            var storageAccount = ConnectStorageAccount();
-            var cloudBlobContainer = FetchBlobContainer(storageAccount, containerName);
-            CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(fileName);
+            string storageConnectionString = _configurationValueProvider.GetValue("StorageConnectionString");
 
-            if (await cloudBlobContainer.ExistsAsync())
+            if (CloudStorageAccount.TryParse(storageConnectionString, out CloudStorageAccount storageAccount))
             {
-                await cloudBlockBlob.DeleteAsync();
+                return storageAccount;
             }
+            else
+            {
+                throw new WebException("Unable to connect to storage account");
+            }
+        }
+
+        private static CloudBlobContainer FetchBlobContainer(CloudStorageAccount storageAccount, string containerName)
+        {
+            CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
+            return cloudBlobClient.GetContainerReference(containerName);
         }
     }
 }

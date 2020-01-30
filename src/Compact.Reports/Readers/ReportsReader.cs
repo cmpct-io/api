@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Compact.Reports
@@ -19,11 +17,7 @@ namespace Compact.Reports
             _dataStore = dataStore;
         }
 
-        public async Task<IEnumerable<Report>> GetAsync(string routeId)
-        {
-            var results = await _dataStore.GetAsync(routeId);
-
-            return results;
-        }
+        public async Task<IEnumerable<Report>> GetAsync(string routeId) =>
+            await _dataStore.GetAsync(routeId);
     }
 }

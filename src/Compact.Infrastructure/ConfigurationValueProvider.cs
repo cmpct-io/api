@@ -16,9 +16,7 @@ namespace Compact.Infrastructure
             _configuration = configuration;
         }
 
-        public string GetValue(string key)
-        {
-            return _configuration[key];
-        }
+        public string GetValue(string key) =>
+            _configuration[key];
     }
 }

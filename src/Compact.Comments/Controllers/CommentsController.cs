@@ -21,12 +21,8 @@ namespace Compact.Comments
         /// </summary>
         [HttpGet("/api/routes/{routeId}/comments")]
         [ProducesResponseType(typeof(IEnumerable<Comment>), 200)]
-        public async Task<ActionResult> GetAsync(string routeId)
-        {
-            var response = await _reader.GetAsync(routeId);
-
-            return Ok(response);
-        }
+        public async Task<ActionResult> GetAsync(string routeId) =>
+            Ok(await _reader.GetAsync(routeId));
 
         /// <summary>
         /// Add a new comment about a route
