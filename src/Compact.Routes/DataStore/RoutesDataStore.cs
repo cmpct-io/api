@@ -1,7 +1,4 @@
 ﻿using Compact.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Compact.Routes
@@ -19,8 +16,6 @@ namespace Compact.Routes
 
         private const string CONTAINER_NAME = "routes";
 
-        private List<Route> _routes = new List<Route>();
-
         public RoutesDataStore(IAzureStorageManager fileStore)
         {
             _fileStore = fileStore;
@@ -28,15 +23,6 @@ namespace Compact.Routes
 
         public async Task<Route> GetAsync(string routeId)
         {
-            var cachedResult = _routes
-                .FirstOrDefault(rou => routeId
-                    .Equals(rou.Id, StringComparison.OrdinalIgnoreCase));
-
-            if (cachedResult != null)
-            {
-                return cachedResult;
-            }
-
             var downloadedResult = await _fileStore.ReadObject<Route>(CONTAINER_NAME, $"{routeId}.json");
 
             return downloadedResult;
@@ -46,9 +32,6 @@ namespace Compact.Routes
         {
             // Permanent storage
             await _fileStore.StoreObject(CONTAINER_NAME, $"{route.Id}.json", route);
-
-            // Cached storage
-            _routes.Add(route);
         }
     }
 }

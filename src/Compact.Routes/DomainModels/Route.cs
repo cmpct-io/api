@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Compact.Routes
 {
@@ -21,5 +22,10 @@ namespace Compact.Routes
         /// A password which must be provided to download this route
         /// </summary>
         public string Password { get; set; }
+
+        /// <summary>
+        /// A flag that the RouteProcessor has processed the route for metadata
+        /// </summary>
+        public DateTime? ProcessDate { get; set; }
     }
 }
