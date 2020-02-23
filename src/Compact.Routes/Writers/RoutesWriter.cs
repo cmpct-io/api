@@ -23,7 +23,9 @@ namespace Compact.Routes
             var route = new Route
             {
                 Id = routeId,
-                Links = links.Select(lnk => new Link { Target = lnk }),
+                Links = links
+                    .Distinct()
+                    .Select(lnk => new Link { Target = lnk }),
                 Password = password
             };
 
