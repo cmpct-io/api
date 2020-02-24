@@ -33,7 +33,7 @@ namespace Compact.Routes
                 return NotFound();
             }
 
-            return Unauthorized();
+            return Ok(response);
         }
 
         /// <summary>
