@@ -19,11 +19,6 @@ namespace Compact.Routes
         public IEnumerable<Link> Links { get; set; }
 
         /// <summary>
-        /// A password which must be provided to download this route
-        /// </summary>
-        public string Password { get; set; }
-
-        /// <summary>
         /// A flag that the RouteProcessor has processed the route for metadata
         /// </summary>
         public DateTime? ProcessDate { get; set; }

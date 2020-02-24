@@ -24,18 +24,13 @@ namespace Compact.Routes
         /// </summary>
         [HttpGet("/api/routes/{routeId}")]
         [ProducesResponseType(typeof(Route), 200)]
-        public async Task<ActionResult<IEnumerable<string>>> GetAsync(string routeId, string password)
+        public async Task<ActionResult<IEnumerable<string>>> GetAsync(string routeId)
         {
             var response = await _routesReader.GetAsync(routeId);
 
             if (response == null)
             {
                 return NotFound();
-            }
-
-            if (ValidPassword(response.Password, password))
-            {
-                return Ok(response);
             }
 
             return Unauthorized();
@@ -54,21 +49,9 @@ namespace Compact.Routes
                 return BadRequest("No links were provided, at least one must link must be specified");
             }
 
-            await _routesWriter.CreateAsync(request.RouteId, request.Links, request.Password);
+            await _routesWriter.CreateAsync(request.RouteId, request.Links);
 
             return NoContent();
-        }
-
-        private bool ValidPassword(string actualPassword, string requestPassword)
-        {
-            if (requestPassword == null)
-            {
-                requestPassword = string.Empty;
-            }
-
-            return
-                string.IsNullOrEmpty(actualPassword)
-                || requestPassword.Equals(actualPassword);
         }
     }
 }
